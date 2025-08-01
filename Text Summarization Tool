@@ -1,0 +1,26 @@
+from transformers import pipeline
+
+#Load summarization pipeline
+summarizer=pipeline("summarization",model="facebook/bart-large-cnn")
+
+def summarize_text(text,max_length=130,min_length=30):
+    "Summarize input text using BART model."
+    ":param text : The input article/text"
+    ":param max_length:Maximum length of the summary"
+    ":param min_length:Minimum length of the summary"
+    "return : Summarized text"
+
+    summary=summarizer(text,max_length=max_length,min_length=min_length,do_sample=False)
+    return summary[0]['summary_text']
+
+#Example:Long input article
+
+input_text="Climate change refers to long-term shifts in temperatures and weather patterns." \
+"These shifts may be natural,such as through variations in the solar cycle.But since the 1800s" \
+"human activities have been the main driver of climate change,primarily due to burning fossil" \
+"fuels like coal,oil and gas."
+
+#Generates and print summary
+summary_result=summarize_text(input_text)
+print("Original Text:\n",input_text)
+print("\n Summary:\n",summary_result)
